@@ -1,4 +1,4 @@
-;
+2;
 ;
 ;
 
@@ -57,6 +57,15 @@
 (require 'multiple-cursors)
 (global-set-key (kbd "C-d") 'mc/mark-next-like-this)
 ;(global-set-key (kbd "C-D") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-D") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-S-D") 'mc/mark-all-like-this)
+;(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "M-d") 'mc/edit-lines)
 
 (setq visible-bell 1)
+
+;(setq mouse-wheel-scroll-amount '(5 ((shift) . 5))) ;; one line at a time
+;(setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+;(setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+;(setq scroll-step 1) ;; keyboard scroll one line at a time
+
+
