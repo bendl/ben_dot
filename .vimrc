@@ -40,8 +40,12 @@ nmap ghs <Plug>(GitGutterPreviewHunk)
 nmap ghn <Plug>(GitGutterNextHunk)
 nmap ghp <Plug>(GitGutterPrevHunk)
 
+"Plugin 'yonchu/accelerated-smooth-scroll'
+
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-surround'
+Plugin 'easymotion/vim-easymotion'
+map \ <Plug>(easymotion-prefix)
 
 "Plugin 'tpope/vim-fugitive'
 
@@ -128,6 +132,7 @@ augroup END
 if has('gui_running')
     set lines=999 columns=999
 endif
+
 
 
 
