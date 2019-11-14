@@ -42,6 +42,7 @@ nmap ghp <Plug>(GitGutterPrevHunk)
 
 
 
+Plugin 'ervandew/supertab'
 "Plugin 'tpope/vim-fugitive'
 
 "
