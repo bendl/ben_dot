@@ -40,9 +40,9 @@ nmap ghs <Plug>(GitGutterPreviewHunk)
 nmap ghn <Plug>(GitGutterNextHunk)
 nmap ghp <Plug>(GitGutterPrevHunk)
 
-
-
 Plugin 'ervandew/supertab'
+Plugin 'tpope/vim-surround'
+
 "Plugin 'tpope/vim-fugitive'
 
 "
