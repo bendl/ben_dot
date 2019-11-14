@@ -98,7 +98,7 @@ set expandtab
 set list
 set listchars=tab:>-
  
-"set colorcolumn=80
+set colorcolumn=80
 set t_Co=256
 let g:solarized_termcolors=256
 set bg=light
