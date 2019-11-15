@@ -14,7 +14,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-map <C-n> :NERDTreeToggle<CR>
+"map <C-n> :NERDTreeToggle<CR>
 "close vim if nerdtree is last
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -31,7 +31,8 @@ let g:NERDTreeWinSize=60
 "Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 Plugin 'vhda/verilog_systemverilog.vim'
-"Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
 Plugin 'airblade/vim-gitgutter'
 set updatetime=100
@@ -43,11 +44,19 @@ nmap ghp <Plug>(GitGutterPrevHunk)
 "Plugin 'yonchu/accelerated-smooth-scroll'
 
 Plugin 'ervandew/supertab'
+"Plugin 'valloric/youcompleteme'
+
 Plugin 'tpope/vim-surround'
 Plugin 'easymotion/vim-easymotion'
 map \ <Plug>(easymotion-prefix)
 
+Plugin 'nathanaelkane/vim-indent-guides'
+"let g:indent_guides_enable_on_vim_startup = 1
+
 "Plugin 'tpope/vim-fugitive'
+Plugin 'terryma/vim-multiple-cursors'
+let g:multi_cursor_start_word_key = '<C-n>'
+
 
 "
 " " The following are examples of different formats supported.
@@ -91,6 +100,8 @@ set number
 set listchars=eol:$,tab:.-,trail:~,extends:>,precedes:<
 set list
 
+set encoding=utf-8
+
 syntax on
 
 set syntax=verilog
@@ -102,7 +113,8 @@ set expandtab
 "set list
 set list
 set listchars=tab:>-
- 
+set ruler 
+
 set colorcolumn=80
 set t_Co=256
 let g:solarized_termcolors=256
@@ -132,7 +144,6 @@ augroup END
 if has('gui_running')
     set lines=999 columns=999
 endif
-
 
 
 
