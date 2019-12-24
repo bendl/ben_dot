@@ -1,6 +1,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+colorscheme peachpuff
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -10,45 +12,67 @@ call vundle#begin()
 " " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-" nerdtree tree browser
-Plugin 'scrooloose/nerdtree'
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"map <C-n> :NERDTreeToggle<CR>
-"close vim if nerdtree is last
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+if has("gui_running")
+  "Plugin 'Xuyuanp/nerdtree-git-plugin'
+  Plugin 'tpope/vim-sensible'
 
-"https://medium.com/@victormours/a-better-nerdtree-setup-3d3921abc0b9
-"open by default
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+  " nerdtree tree browser
+  Plugin 'scrooloose/nerdtree'
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+  "map <C-n> :NERDTreeToggle<CR>
+  "close vim if nerdtree is last
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
+  "https://medium.com/@victormours/a-better-nerdtree-setup-3d3921abc0b9
+  "open by default
+  autocmd StdinReadPre * let s:std_in=1
+  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+  "autocmd VimEnter * NERDTree
+  let g:NERDTreeWinSize=60
+
+  Plugin 'vhda/verilog_systemverilog.vim'
+
+  Plugin 'vim-airline/vim-airline'
+  Plugin 'vim-airline/vim-airline-themes'
+
+  Plugin 'godlygeek/tabular'
+  Plugin 'junegunn/vim-easy-align'
+
+  "Plugin 'majutsushi/tagbar'
+
+  Plugin 'airblade/vim-gitgutter'
+
+  "Plugin 'nathanaelkane/vim-indent-guides'
+  Plugin 'yggdroot/indentline'
+
+  Plugin 'morhetz/gruvbox'
+endif
+
+Plugin 'ervandew/supertab'
+"Plugin 'valloric/youcompleteme'
+
+Plugin 'tpope/vim-surround'
+Plugin 'easymotion/vim-easymotion'
+"Plugin 'tpope/vim-fugitive'
+Plugin 'terryma/vim-multiple-cursors'
+
+Plugin 'scrooloose/nerdcommenter'
+
+Plugin 'ctrlpvim/ctrlp.vim'
 "https://vim.fandom.com/wiki/Remove_unwanted_spaces
 autocmd BufWritePre * %s/\s\+$//e
 
 nnoremap <silent> <C-m> :NERDTreeFind<CR>
+let g:indent_guides_enable_on_vim_startup = 1
 
-"autocmd VimEnter * NERDTree
-let g:NERDTreeWinSize=60
-
-"Plugin 'Xuyuanp/nerdtree-git-plugin'
-"
-Plugin 'tpope/vim-sensible'
-
-Plugin 'vhda/verilog_systemverilog.vim'
-
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-
-Plugin 'godlygeek/tabular'
-Plugin 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-Plugin 'airblade/vim-gitgutter'
 set updatetime=50
 nmap ghu <Plug>(GitGutterUndoHunk)
 nmap ghs <Plug>(GitGutterPreviewHunk)
@@ -56,29 +80,9 @@ nmap ghn <Plug>(GitGutterNextHunk)
 nmap ghp <Plug>(GitGutterPrevHunk)
 nmap ghd <Plug>(GitGutterFold)
 nmap gha <Plug>(GitGutterStageHunk)
-
-"Plugin 'yonchu/accelerated-smooth-scroll'
-
-Plugin 'ervandew/supertab'
-"Plugin 'valloric/youcompleteme'
-
-Plugin 'tpope/vim-surround'
-Plugin 'easymotion/vim-easymotion'
 map \ <Plug>(easymotion-prefix)
 
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'yggdroot/indentline'
-"let g:indent_guides_enable_on_vim_startup = 1
-
-"Plugin 'tpope/vim-fugitive'
-Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_start_word_key = '<C-n>'
-
-Plugin 'morhetz/gruvbox'
-
-Plugin 'scrooloose/nerdcommenter'
-
-Plugin 'ctrlpvim/ctrlp.vim'
 
 " Use compact syntax for prettified multi-line comments
 let g:NERDCompactSexyComs = 1
@@ -174,10 +178,14 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 "colorscheme default
-colorscheme peachpuff
+"colorscheme peachpuff
 "colorscheme gruvbox
 "colorscheme torte
 "colorscheme solarized
+
+if has("gui_running")
+  colorscheme solarized
+endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
 set foldmethod=indent

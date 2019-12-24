@@ -7,3 +7,6 @@ set guioptions-=T  "toolbar
 "set guioptions-=L  "remove lhs scrollbra
 
 "set go+=m
+
+
+set colorcolumn=80
