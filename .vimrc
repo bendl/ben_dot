@@ -1,7 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-colorscheme peachpuff
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -12,7 +11,7 @@ call vundle#begin()
 " " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-if has("gui_running")
+if has("gui_running") || exists('g:GuiLoaded') || has('nvim')
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
   Plugin 'tpope/vim-sensible'
 
@@ -32,6 +31,7 @@ if has("gui_running")
   "autocmd VimEnter * NERDTree
   let g:NERDTreeWinSize=60
 
+  Plugin 'universal-ctags/ctags'
   Plugin 'vhda/verilog_systemverilog.vim'
 
   Plugin 'vim-airline/vim-airline'
@@ -48,6 +48,8 @@ if has("gui_running")
   Plugin 'yggdroot/indentline'
 
   Plugin 'morhetz/gruvbox'
+
+  set guifont=Monospace\ Regular\ 13
 endif
 
 Plugin 'ervandew/supertab'
@@ -59,6 +61,8 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 
 Plugin 'scrooloose/nerdcommenter'
+"Plugin 'altercation/vim-colors-solarized'
+Plugin 'romainl/flattened'
 
 Plugin 'ctrlpvim/ctrlp.vim'
 "https://vim.fandom.com/wiki/Remove_unwanted_spaces
@@ -133,6 +137,12 @@ filetype plugin indent on    " required
 
 set backspace=indent,eol,start
 
+
+
+"set fileformat=unix
+"set fileformats=unix,dos
+"set nobinary
+
 set number
 set listchars=eol:$,tab:.-,trail:~,extends:>,precedes:<
 set list
@@ -159,6 +169,10 @@ set ruler
 " relative line numbers
 set nu rnu
 
+if has('nvim')
+  GuiFont DejaVu Sans Mono:h13
+endif
+
 set t_Co=256
 let g:solarized_termcolors=256
 set bg=light
@@ -183,8 +197,11 @@ nnoremap <C-H> <C-W><C-H>
 "colorscheme torte
 "colorscheme solarized
 
-if has("gui_running")
-  colorscheme solarized
+if has("gui_running") || exists('g:GuiLoaded')
+  "colorscheme solarized
+  colorscheme flattened_light
+else
+  colorscheme peachpuff
 endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/

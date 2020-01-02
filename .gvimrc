@@ -1,5 +1,6 @@
 
-colorscheme solarized
+"colorscheme solarized
+colorscheme flattened
 
 set guioptions-=m  "menu bar
 set guioptions-=T  "toolbar
