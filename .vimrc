@@ -1,4 +1,4 @@
-set nocompatible              " be iMproved, required
+  set nocompatible              " be iMproved, required
 filetype off                  " required
 
 
@@ -10,6 +10,8 @@ call vundle#begin()
 "
 " " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'lifepillar/vim-solarized8'
 
 if has("gui_running") || exists('g:GuiLoaded') || has('nvim')
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -170,7 +172,6 @@ set ruler
 set nu rnu
 
 if has('nvim')
-  GuiFont DejaVu Sans Mono:h13
 endif
 
 set t_Co=256
@@ -197,9 +198,11 @@ nnoremap <C-H> <C-W><C-H>
 "colorscheme torte
 "colorscheme solarized
 
-if has("gui_running") || exists('g:GuiLoaded')
-  "colorscheme solarized
-  colorscheme flattened_light
+if has("nvim")
+  GuiFont DejaVu Sans Mono:h13
+  colorscheme solarized8_flat
+elseif has("gui_running") || exists('g:GuiLoaded') || has ("nvim")
+  colorscheme gruvbox
 else
   colorscheme peachpuff
 endif
@@ -210,10 +213,6 @@ augroup OpenAllFoldsOnFileOpen
     autocmd!
     autocmd BufRead * normal zR
 augroup END
-
-if has('gui_running')
-    set lines=999 columns=999
-endif
 
 
 
