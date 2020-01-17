@@ -63,8 +63,9 @@ Plugin 'easymotion/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 
 Plugin 'scrooloose/nerdcommenter'
-"Plugin 'altercation/vim-colors-solarized'
-Plugin 'romainl/flattened'
+
+Plugin 'raimondi/delimitmate'
+Plugin 'triglav/vim-visual-increment'
 
 Plugin 'ctrlpvim/ctrlp.vim'
 "https://vim.fandom.com/wiki/Remove_unwanted_spaces
@@ -137,6 +138,8 @@ filetype plugin indent on    " required
 " " see :h vundle for more details or wiki for FAQ
 " " Put your non-Plugin stuff after this line
 
+set nrformats=alpha,octal,hex
+
 set backspace=indent,eol,start
 
 
@@ -191,6 +194,17 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+nnoremap tn :tabnew<CR>
+nnoremap tm :tabnew<Space>
+nnoremap tq :tabclose<CR>
+
+nnoremap tk :tabnext<CR>
+nnoremap tj :tabprev<CR>
+
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+
 
 "colorscheme default
 "colorscheme peachpuff
