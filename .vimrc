@@ -1,4 +1,4 @@
-  set nocompatible              " be iMproved, required
+set nocompatible              " be iMproved, required
 filetype off                  " required
 
 
@@ -11,35 +11,38 @@ call vundle#begin()
 " " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-Plugin 'lifepillar/vim-solarized8'
+Plugin 'universal-ctags/ctags'
 
-if has("gui_running") || exists('g:GuiLoaded') || has('nvim')
+"if has("gui_running")
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
   Plugin 'tpope/vim-sensible'
 
   " nerdtree tree browser
   Plugin 'scrooloose/nerdtree'
-  autocmd StdinReadPre * let s:std_in=1
-  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
   "map <C-n> :NERDTreeToggle<CR>
   "close vim if nerdtree is last
-  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+  "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
   "https://medium.com/@victormours/a-better-nerdtree-setup-3d3921abc0b9
   "open by default
-  autocmd StdinReadPre * let s:std_in=1
-  autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+  "autocmd StdinReadPre * let s:std_in=1
+  "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
   "autocmd VimEnter * NERDTree
   let g:NERDTreeWinSize=60
 
-  Plugin 'universal-ctags/ctags'
+  "Plugin 'jistr/vim-nerdtree-tabs'
+  Plugin 'konfekt/fastfold'
+
   Plugin 'vhda/verilog_systemverilog.vim'
+
+  nnoremap gi :VerilogFollowInstance<CR>
+  nnoremap gI :VerilogFollowPort<CR>
+  "Plugin 'antoinemadec/vim-verilog-instance'
 
   Plugin 'vim-airline/vim-airline'
   Plugin 'vim-airline/vim-airline-themes'
 
-  Plugin 'godlygeek/tabular'
   Plugin 'junegunn/vim-easy-align'
 
   "Plugin 'majutsushi/tagbar'
@@ -47,28 +50,34 @@ if has("gui_running") || exists('g:GuiLoaded') || has('nvim')
   Plugin 'airblade/vim-gitgutter'
 
   "Plugin 'nathanaelkane/vim-indent-guides'
-  Plugin 'yggdroot/indentline'
+  "Plugin 'yggdroot/indentline'
 
   Plugin 'morhetz/gruvbox'
 
-  set guifont=Monospace\ Regular\ 13
-endif
+  Plugin 'junegunn/goyo.vim'
+"endif
+
+Plugin 'lifepillar/vim-solarized8'
+
+Plugin 'godlygeek/tabular'
 
 Plugin 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = 'context'
 "Plugin 'valloric/youcompleteme'
 
 Plugin 'tpope/vim-surround'
 Plugin 'easymotion/vim-easymotion'
-"Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 
 Plugin 'scrooloose/nerdcommenter'
-"Plugin 'altercation/vim-colors-solarized'
-Plugin 'romainl/flattened'
+Plugin 'raimondi/delimitmate'
+
+Plugin 'triglav/vim-visual-increment'
 
 Plugin 'ctrlpvim/ctrlp.vim'
 "https://vim.fandom.com/wiki/Remove_unwanted_spaces
-autocmd BufWritePre * %s/\s\+$//e
+"autocmd BufWritePre * %s/\s\+$//e
 
 nnoremap <silent> <C-m> :NERDTreeFind<CR>
 let g:indent_guides_enable_on_vim_startup = 1
@@ -137,14 +146,15 @@ filetype plugin indent on    " required
 " " see :h vundle for more details or wiki for FAQ
 " " Put your non-Plugin stuff after this line
 
+"Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
+set nrformats=alpha,octal,hex
 set backspace=indent,eol,start
 
+set foldmethod=syntax
 
-
-"set fileformat=unix
-"set fileformats=unix,dos
-"set nobinary
-
+set mouse=a
 set number
 set listchars=eol:$,tab:.-,trail:~,extends:>,precedes:<
 set list
@@ -171,9 +181,6 @@ set ruler
 " relative line numbers
 set nu rnu
 
-if has('nvim')
-endif
-
 set t_Co=256
 let g:solarized_termcolors=256
 set bg=light
@@ -192,19 +199,28 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+nnoremap tn :tabnew<CR>
+nnoremap tm :tabnew<Space>
+nnoremap tq :tabclose<CR>
+
+nnoremap tk :tabnext<CR>
+nnoremap tj :tabprev<CR>
+
+nnoremap th :tabfirst<CR>
+nnoremap tl :tablast<CR>
+
+
 "colorscheme default
-"colorscheme peachpuff
+colorscheme peachpuff
 "colorscheme gruvbox
 "colorscheme torte
 "colorscheme solarized
+"colorscheme solarized8
+colorscheme gruvbox
 
-if has("nvim")
-  GuiFont DejaVu Sans Mono:h13
-  colorscheme solarized8_flat
-elseif has("gui_running") || exists('g:GuiLoaded') || has ("nvim")
+if has("gui_running")
+  "colorscheme solarized8_flat
   colorscheme gruvbox
-else
-  colorscheme peachpuff
 endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
@@ -213,6 +229,10 @@ augroup OpenAllFoldsOnFileOpen
     autocmd!
     autocmd BufRead * normal zR
 augroup END
+
+if has('gui_running')
+    set lines=999 columns=999
+endif
 
 
 
