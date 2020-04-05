@@ -1,6 +1,7 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+colorscheme peachpuff
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -219,12 +220,11 @@ colorscheme peachpuff
 colorscheme gruvbox
 
 if has("gui_running")
-  "colorscheme solarized8_flat
   colorscheme gruvbox
 endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
-set foldmethod=indent
+"set foldmethod=indent
 augroup OpenAllFoldsOnFileOpen
     autocmd!
     autocmd BufRead * normal zR
@@ -233,13 +233,4 @@ augroup END
 if has('gui_running')
     set lines=999 columns=999
 endif
-
-
-
-
-
-
-
-
-
 
