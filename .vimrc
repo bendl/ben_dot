@@ -1,7 +1,9 @@
+"
+"
+"
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
-colorscheme peachpuff
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -13,6 +15,8 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'universal-ctags/ctags'
+
+Plugin 'tpope/vim-eunuch'
 
 "if has("gui_running")
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
@@ -39,7 +43,7 @@ Plugin 'universal-ctags/ctags'
 
   nnoremap gi :VerilogFollowInstance<CR>
   nnoremap gI :VerilogFollowPort<CR>
-  "Plugin 'antoinemadec/vim-verilog-instance'
+  Plugin 'antoinemadec/vim-verilog-instance'
 
   Plugin 'vim-airline/vim-airline'
   Plugin 'vim-airline/vim-airline-themes'
@@ -54,11 +58,12 @@ Plugin 'universal-ctags/ctags'
   "Plugin 'yggdroot/indentline'
 
   Plugin 'morhetz/gruvbox'
+  Plugin 'lifepillar/vim-solarized8'
+  let g:alduin_Shout_Become_Ethereal = 1
+  Plugin 'alessandroyorba/alduin'
 
   Plugin 'junegunn/goyo.vim'
 "endif
-
-Plugin 'lifepillar/vim-solarized8'
 
 Plugin 'godlygeek/tabular'
 
@@ -164,6 +169,8 @@ set cursorline
 
 set nowrap
 
+set autoread
+
 set encoding=utf-8
 
 syntax on
@@ -184,11 +191,10 @@ set nu rnu
 
 set t_Co=256
 let g:solarized_termcolors=256
-set bg=light
 let g:gruvbox_italic=1
 let g:gruvbox_termcolors=16
-"let g:gruvbox_contrast_dark=hard
-"let g:gruvbox_contrast_light=hard
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_contrast_light='hard'
 
 let g:NERDTreeDirArrows = 0
 let NERDTreeDirArrowExpandable = "\u00a0"
@@ -210,18 +216,23 @@ nnoremap tj :tabprev<CR>
 nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 
-
+set bg=light
 "colorscheme default
 colorscheme peachpuff
-"colorscheme gruvbox
-"colorscheme torte
 "colorscheme solarized
 "colorscheme solarized8
-colorscheme gruvbox
-
-if has("gui_running")
-  colorscheme gruvbox
+"colorscheme torte
+"colorscheme gruvbox
+if g:colors_name == "gruvbox"
+  highlight Normal ctermbg=16 guibg=#000000
 endif
+colorscheme alduin
+
+let g:gruvbox_contrast_dark = 'dark'
+"if has("gui")
+"  colorscheme gruvbox
+"  colorscheme torte
+"endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
 "set foldmethod=indent
@@ -234,3 +245,5 @@ if has('gui_running')
     set lines=999 columns=999
 endif
 
+if has("nvim")
+endif
