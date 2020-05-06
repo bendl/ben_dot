@@ -40,8 +40,8 @@ Plugin 'universal-ctags/ctags'
   nnoremap gI :VerilogFollowPort<CR>
   Plugin 'antoinemadec/vim-verilog-instance'
 
-  Plugin 'vim-airline/vim-airline'
-  Plugin 'vim-airline/vim-airline-themes'
+  "Plugin 'vim-airline/vim-airline'
+  "Plugin 'vim-airline/vim-airline-themes'
 
   "Plugin 'junegunn/vim-easy-align'
 
@@ -64,6 +64,8 @@ Plugin 'mhinz/vim-startify'
 
 Plugin 'godlygeek/tabular'
 
+"Plugin 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
 Plugin 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = 'context'
 "Plugin 'valloric/youcompleteme'
@@ -234,10 +236,10 @@ endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
 "set foldmethod=indent
-augroup OpenAllFoldsOnFileOpen
-    autocmd!
-    autocmd BufRead * normal zR
-augroup END
+"augroup OpenAllFoldsOnFileOpen
+"    autocmd!
+"    autocmd BufRead * normal zR
+"augroup END
 
 if has('gui_running')
     "set lines=999 columns=999
@@ -247,8 +249,30 @@ if has('nvim')
     au! TabNewEntered * Startify
 endif
 
-
-
+"set statusline=
+"set statusline+=%#DiffAdd#%{(mode()=='n')?'\ \ NORMAL\ ':''}
+"set statusline+=%#DiffChange#%{(mode()=='i')?'\ \ INSERT\ ':''}
+"set statusline+=%#DiffDelete#%{(mode()=='r')?'\ \ RPLACE\ ':''}
+"set statusline+=%#Cursor#%{(mode()=='v')?'\ \ VISUAL\ ':''}
+"set statusline+=\ %n\           " buffer number
+"set statusline+=%#Visual#       " colour
+"set statusline+=%{&paste?'\ PASTE\ ':''}
+"set statusline+=%{&spell?'\ SPELL\ ':''}
+"set statusline+=%#CursorIM#     " colour
+"set statusline+=%R                        " readonly flag
+"set statusline+=%M                        " modified [+] flag
+"set statusline+=%#Cursor#               " colour
+"set statusline+=%#CursorLine#     " colour
+"set statusline+=\ %t\                   " short file name
+"set statusline+=%=                          " right align
+"set statusline+=%#CursorLine#   " colour
+"set statusline+=\ %Y\                   " file type
+"set statusline+=%#CursorIM#     " colour
+"set statusline+=\ %3l:%-2c\         " line + column
+"set statusline+=%#Cursor#       " colour
+"set statusline+=\ %3p%%\                " percentage
+"
+set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
 
 
 
