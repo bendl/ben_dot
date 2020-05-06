@@ -1,8 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-colorscheme peachpuff
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -12,17 +10,15 @@ call vundle#begin()
 " " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 
-if has("gui_running")
-  "Plugin 'blueyed/vim-diminactive'
-  "Plugin 'TaDaa/vimade'
-endif
+Plugin 'universal-ctags/ctags'
 
 "if has("gui_running")
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
-  Plugin 'tpope/vim-sensible'
+  "Plugin 'tpope/vim-sensible'
 
   " nerdtree tree browser
   Plugin 'scrooloose/nerdtree'
+  "Plugin 'Xuyuanp/nerdtree-git-plugin'
   "map <C-n> :NERDTreeToggle<CR>
   "close vim if nerdtree is last
   "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
@@ -36,38 +32,48 @@ endif
   let g:NERDTreeWinSize=60
 
   "Plugin 'jistr/vim-nerdtree-tabs'
+  Plugin 'konfekt/fastfold'
 
   Plugin 'vhda/verilog_systemverilog.vim'
+
+  nnoremap gi :VerilogFollowInstance<CR>
+  nnoremap gI :VerilogFollowPort<CR>
+  Plugin 'antoinemadec/vim-verilog-instance'
 
   Plugin 'vim-airline/vim-airline'
   Plugin 'vim-airline/vim-airline-themes'
 
-  Plugin 'junegunn/vim-easy-align'
+  "Plugin 'junegunn/vim-easy-align'
+
+  Plugin 'michaeljsmith/vim-indent-object'
 
   "Plugin 'majutsushi/tagbar'
 
   Plugin 'airblade/vim-gitgutter'
 
   "Plugin 'nathanaelkane/vim-indent-guides'
-  Plugin 'yggdroot/indentline'
+  "Plugin 'yggdroot/indentline'
 
   Plugin 'morhetz/gruvbox'
 
-  Plugin 'junegunn/goyo.vim'
+  "Plugin 'junegunn/goyo.vim'
 "endif
 
-Plugin 'lifepillar/vim-solarized8'
+Plugin 'mhinz/vim-startify'
+"Plugin 'lifepillar/vim-solarized8'
 
 Plugin 'godlygeek/tabular'
 
 Plugin 'ervandew/supertab'
+let g:SuperTabDefaultCompletionType = 'context'
 "Plugin 'valloric/youcompleteme'
 
 Plugin 'tpope/vim-surround'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 
+Plugin 'kshenoy/vim-signature'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'raimondi/delimitmate'
 
@@ -144,23 +150,29 @@ filetype plugin indent on    " required
 " " see :h vundle for more details or wiki for FAQ
 " " Put your non-Plugin stuff after this line
 
+
 "Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
 set nrformats=alpha,octal,hex
 set backspace=indent,eol,start
+set statusline+=%F
 
+set foldmethod=syntax
+
+set mouse=a
 set number
 set listchars=eol:$,tab:.-,trail:~,extends:>,precedes:<
 set list
 "set cursorcolumn
-set cursorline
-
+"set cursorline
 set nowrap
 
 set encoding=utf-8
 
+set background=light
 syntax on
+syntax enable
 
 set syntax=verilog
 set tabstop=2
@@ -175,6 +187,9 @@ set ruler
 
 " relative line numbers
 set nu rnu
+
+set path+=**
+
 
 set t_Co=256
 let g:solarized_termcolors=256
@@ -210,25 +225,27 @@ nnoremap tl :tablast<CR>
 "colorscheme gruvbox
 "colorscheme torte
 "colorscheme solarized
-
 "colorscheme solarized8
+"colorscheme gruvbox
 
 if has("gui_running")
-  "colorscheme solarized8_flat
   colorscheme gruvbox
 endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
-set foldmethod=indent
+"set foldmethod=indent
 augroup OpenAllFoldsOnFileOpen
     autocmd!
     autocmd BufRead * normal zR
 augroup END
 
 if has('gui_running')
-    set lines=999 columns=999
+    "set lines=999 columns=999
 endif
 
+if has('nvim')
+    au! TabNewEntered * Startify
+endif
 
 
 
