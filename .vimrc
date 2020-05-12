@@ -16,10 +16,19 @@ Plugin 'universal-ctags/ctags'
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
   "Plugin 'tpope/vim-sensible'
 
+  "Plugin 'Shougo/unite.vim'
+  "Plugin 'Shougo/vimfiler.vim'
+  "let g:vimfiler_as_default_explorer = 1
+
+  "Plugin 'eiginn/netrw'
+  "Plugin 'tpope/vim-vinegar'
+
+  "Plugin 'Shougo/defx.nvim'
+
   " nerdtree tree browser
   Plugin 'scrooloose/nerdtree'
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
-  "map <C-n> :NERDTreeToggle<CR>
+
   "close vim if nerdtree is last
   "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -27,6 +36,10 @@ Plugin 'universal-ctags/ctags'
   "open by default
   "autocmd StdinReadPre * let s:std_in=1
   "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+  "dont open nerdtree if opening vim with sessions
+  autocmd StdinReadPre * let s:std_in=1
+  "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
 
   "autocmd VimEnter * NERDTree
   let g:NERDTreeWinSize=60
@@ -45,14 +58,13 @@ Plugin 'universal-ctags/ctags'
 
   "Plugin 'junegunn/vim-easy-align'
 
-  Plugin 'michaeljsmith/vim-indent-object'
-
   "Plugin 'majutsushi/tagbar'
 
   Plugin 'airblade/vim-gitgutter'
 
+  Plugin 'michaeljsmith/vim-indent-object'
   "Plugin 'nathanaelkane/vim-indent-guides'
-  "Plugin 'yggdroot/indentline'
+  Plugin 'yggdroot/indentline'
 
   Plugin 'morhetz/gruvbox'
 
@@ -65,7 +77,10 @@ Plugin 'mhinz/vim-startify'
 Plugin 'godlygeek/tabular'
 
 "Plugin 'majutsushi/tagbar'
-nmap <F8> :TagbarToggle<CR>
+"nmap <F8> :TagbarToggle<CR>
+
+"Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+
 Plugin 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = 'context'
 "Plugin 'valloric/youcompleteme'
@@ -85,8 +100,14 @@ Plugin 'ctrlpvim/ctrlp.vim'
 "https://vim.fandom.com/wiki/Remove_unwanted_spaces
 "autocmd BufWritePre * %s/\s\+$//e
 
+Plugin 'tpope/vim-repeat'
+
+
+"nnoremap <silent> <C-,> :NERDTreeToggle<CR>
 nnoremap <silent> <C-m> :NERDTreeFind<CR>
-let g:indent_guides_enable_on_vim_startup = 1
+
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -162,6 +183,8 @@ set statusline+=%F
 
 set foldmethod=syntax
 
+set linespace=2
+
 set mouse=a
 set number
 set listchars=eol:$,tab:.-,trail:~,extends:>,precedes:<
@@ -176,10 +199,18 @@ set background=light
 syntax on
 syntax enable
 
+set incsearch
+set ignorecase
+
+if has("gui_running")
+  set cursorline
+endif
 set syntax=verilog
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+let g:indent_guides_enable_on_vim_startup = 1
 
 "show line endings
 "set list
@@ -211,6 +242,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+"nmap <C-M> :edit .<CR>
+"nmap <C-K> :Rex<CR>
+
 nnoremap tn :tabnew<CR>
 nnoremap tm :tabnew<Space>
 nnoremap tq :tabclose<CR>
@@ -223,7 +257,7 @@ nnoremap tl :tablast<CR>
 
 
 "colorscheme default
-"colorscheme peachpuff
+colorscheme peachpuff
 "colorscheme gruvbox
 "colorscheme torte
 "colorscheme solarized
@@ -232,6 +266,7 @@ nnoremap tl :tablast<CR>
 
 if has("gui_running")
   colorscheme gruvbox
+  set guifont=JetBrains\ Mono\ NL\ Regular\ 11
 endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
@@ -246,7 +281,7 @@ if has('gui_running')
 endif
 
 if has('nvim')
-    au! TabNewEntered * Startify
+    "au! TabNewEntered * Startify
 endif
 
 "set statusline=
