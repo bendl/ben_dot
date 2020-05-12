@@ -1,7 +1,3 @@
-"
-"
-"
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -16,15 +12,23 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'universal-ctags/ctags'
 
-Plugin 'tpope/vim-eunuch'
-
 "if has("gui_running")
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
-  Plugin 'tpope/vim-sensible'
+  "Plugin 'tpope/vim-sensible'
+
+  "Plugin 'Shougo/unite.vim'
+  "Plugin 'Shougo/vimfiler.vim'
+  "let g:vimfiler_as_default_explorer = 1
+
+  "Plugin 'eiginn/netrw'
+  "Plugin 'tpope/vim-vinegar'
+
+  "Plugin 'Shougo/defx.nvim'
 
   " nerdtree tree browser
   Plugin 'scrooloose/nerdtree'
-  "map <C-n> :NERDTreeToggle<CR>
+  "Plugin 'Xuyuanp/nerdtree-git-plugin'
+
   "close vim if nerdtree is last
   "autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
@@ -32,6 +36,10 @@ Plugin 'tpope/vim-eunuch'
   "open by default
   "autocmd StdinReadPre * let s:std_in=1
   "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+  "dont open nerdtree if opening vim with sessions
+  autocmd StdinReadPre * let s:std_in=1
+  "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
 
   "autocmd VimEnter * NERDTree
   let g:NERDTreeWinSize=60
@@ -45,27 +53,33 @@ Plugin 'tpope/vim-eunuch'
   nnoremap gI :VerilogFollowPort<CR>
   Plugin 'antoinemadec/vim-verilog-instance'
 
-  Plugin 'vim-airline/vim-airline'
-  Plugin 'vim-airline/vim-airline-themes'
+  "Plugin 'vim-airline/vim-airline'
+  "Plugin 'vim-airline/vim-airline-themes'
 
-  Plugin 'junegunn/vim-easy-align'
+  "Plugin 'junegunn/vim-easy-align'
 
   "Plugin 'majutsushi/tagbar'
 
   Plugin 'airblade/vim-gitgutter'
 
+  Plugin 'michaeljsmith/vim-indent-object'
   "Plugin 'nathanaelkane/vim-indent-guides'
-  "Plugin 'yggdroot/indentline'
+  Plugin 'yggdroot/indentline'
 
   Plugin 'morhetz/gruvbox'
-  Plugin 'lifepillar/vim-solarized8'
-  let g:alduin_Shout_Become_Ethereal = 1
-  Plugin 'alessandroyorba/alduin'
 
-  Plugin 'junegunn/goyo.vim'
+  "Plugin 'junegunn/goyo.vim'
 "endif
 
+Plugin 'mhinz/vim-startify'
+"Plugin 'lifepillar/vim-solarized8'
+
 Plugin 'godlygeek/tabular'
+
+"Plugin 'majutsushi/tagbar'
+"nmap <F8> :TagbarToggle<CR>
+
+"Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plugin 'ervandew/supertab'
 let g:SuperTabDefaultCompletionType = 'context'
@@ -73,9 +87,10 @@ let g:SuperTabDefaultCompletionType = 'context'
 
 Plugin 'tpope/vim-surround'
 Plugin 'easymotion/vim-easymotion'
-Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 
+Plugin 'kshenoy/vim-signature'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'raimondi/delimitmate'
 
@@ -85,8 +100,14 @@ Plugin 'ctrlpvim/ctrlp.vim'
 "https://vim.fandom.com/wiki/Remove_unwanted_spaces
 "autocmd BufWritePre * %s/\s\+$//e
 
+Plugin 'tpope/vim-repeat'
+
+
+"nnoremap <silent> <C-,> :NERDTreeToggle<CR>
 nnoremap <silent> <C-m> :NERDTreeFind<CR>
-let g:indent_guides_enable_on_vim_startup = 1
+
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -152,33 +173,44 @@ filetype plugin indent on    " required
 " " see :h vundle for more details or wiki for FAQ
 " " Put your non-Plugin stuff after this line
 
+
 "Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 
 set nrformats=alpha,octal,hex
 set backspace=indent,eol,start
+set statusline+=%F
 
 set foldmethod=syntax
+
+set linespace=2
 
 set mouse=a
 set number
 set listchars=eol:$,tab:.-,trail:~,extends:>,precedes:<
 set list
 "set cursorcolumn
-set cursorline
-
+"set cursorline
 set nowrap
-
-set autoread
 
 set encoding=utf-8
 
+set background=light
 syntax on
+syntax enable
 
+set incsearch
+set ignorecase
+
+if has("gui_running")
+  set cursorline
+endif
 set syntax=verilog
 set tabstop=2
 set shiftwidth=2
 set expandtab
+
+let g:indent_guides_enable_on_vim_startup = 1
 
 "show line endings
 "set list
@@ -189,12 +221,16 @@ set ruler
 " relative line numbers
 set nu rnu
 
+set path+=**
+
+
 set t_Co=256
 let g:solarized_termcolors=256
+set bg=light
 let g:gruvbox_italic=1
 let g:gruvbox_termcolors=16
-let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_contrast_light='hard'
+"let g:gruvbox_contrast_dark=hard
+"let g:gruvbox_contrast_light=hard
 
 let g:NERDTreeDirArrows = 0
 let NERDTreeDirArrowExpandable = "\u00a0"
@@ -206,6 +242,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+"nmap <C-M> :edit .<CR>
+"nmap <C-K> :Rex<CR>
+
 nnoremap tn :tabnew<CR>
 nnoremap tm :tabnew<Space>
 nnoremap tq :tabclose<CR>
@@ -216,34 +255,62 @@ nnoremap tj :tabprev<CR>
 nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 
-set bg=light
+
 "colorscheme default
 colorscheme peachpuff
+"colorscheme gruvbox
+"colorscheme torte
 "colorscheme solarized
 "colorscheme solarized8
-"colorscheme torte
 "colorscheme gruvbox
-if g:colors_name == "gruvbox"
-  highlight Normal ctermbg=16 guibg=#000000
-endif
-colorscheme alduin
 
-let g:gruvbox_contrast_dark = 'dark'
-"if has("gui")
-"  colorscheme gruvbox
-"  colorscheme torte
-"endif
+if has("gui_running")
+  colorscheme gruvbox
+  set guifont=JetBrains\ Mono\ NL\ Regular\ 11
+endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
 "set foldmethod=indent
-augroup OpenAllFoldsOnFileOpen
-    autocmd!
-    autocmd BufRead * normal zR
-augroup END
+"augroup OpenAllFoldsOnFileOpen
+"    autocmd!
+"    autocmd BufRead * normal zR
+"augroup END
 
 if has('gui_running')
-    set lines=999 columns=999
+    "set lines=999 columns=999
 endif
 
-if has("nvim")
+if has('nvim')
+    "au! TabNewEntered * Startify
 endif
+
+"set statusline=
+"set statusline+=%#DiffAdd#%{(mode()=='n')?'\ \ NORMAL\ ':''}
+"set statusline+=%#DiffChange#%{(mode()=='i')?'\ \ INSERT\ ':''}
+"set statusline+=%#DiffDelete#%{(mode()=='r')?'\ \ RPLACE\ ':''}
+"set statusline+=%#Cursor#%{(mode()=='v')?'\ \ VISUAL\ ':''}
+"set statusline+=\ %n\           " buffer number
+"set statusline+=%#Visual#       " colour
+"set statusline+=%{&paste?'\ PASTE\ ':''}
+"set statusline+=%{&spell?'\ SPELL\ ':''}
+"set statusline+=%#CursorIM#     " colour
+"set statusline+=%R                        " readonly flag
+"set statusline+=%M                        " modified [+] flag
+"set statusline+=%#Cursor#               " colour
+"set statusline+=%#CursorLine#     " colour
+"set statusline+=\ %t\                   " short file name
+"set statusline+=%=                          " right align
+"set statusline+=%#CursorLine#   " colour
+"set statusline+=\ %Y\                   " file type
+"set statusline+=%#CursorIM#     " colour
+"set statusline+=\ %3l:%-2c\         " line + column
+"set statusline+=%#Cursor#       " colour
+"set statusline+=\ %3p%%\                " percentage
+"
+set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
+
+
+
+
+
+
