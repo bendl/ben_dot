@@ -1,6 +1,7 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -25,8 +26,17 @@ Plugin 'universal-ctags/ctags'
 
   "Plugin 'Shougo/defx.nvim'
 
+  Plugin 'vifm/vifm.vim'
+
+  Plugin 'tpope/vim-eunuch'
+  Plugin 'tpope/vim-unimpaired'
+  Plugin 'justinmk/vim-dirvish'
+
+  "Plugin 'kristijanhusak/vim-dirvish-git'
+  "Plugin 'lambdalisue/fern.vim'
+
   " nerdtree tree browser
-  Plugin 'scrooloose/nerdtree'
+  "Plugin 'scrooloose/nerdtree'
   "Plugin 'Xuyuanp/nerdtree-git-plugin'
 
   "close vim if nerdtree is last
@@ -49,10 +59,11 @@ Plugin 'universal-ctags/ctags'
 
   Plugin 'vhda/verilog_systemverilog.vim'
 
-  nnoremap gi :VerilogFollowInstance<CR>
-  nnoremap gI :VerilogFollowPort<CR>
+  nnoremap gvi :VerilogFollowInstance<CR>
+  nnoremap gvI :VerilogFollowPort<CR>
   Plugin 'antoinemadec/vim-verilog-instance'
 
+  Plugin 'itchyny/lightline.vim'
   "Plugin 'vim-airline/vim-airline'
   "Plugin 'vim-airline/vim-airline-themes'
 
@@ -66,12 +77,19 @@ Plugin 'universal-ctags/ctags'
   "Plugin 'nathanaelkane/vim-indent-guides'
   Plugin 'yggdroot/indentline'
 
-  Plugin 'morhetz/gruvbox'
+  " Plugin 'morhetz/gruvbox'
+  Plugin 'gruvbox-community/gruvbox'
 
   "Plugin 'junegunn/goyo.vim'
 "endif
 
 Plugin 'mhinz/vim-startify'
+nnoremap <C-s> :Startify<CR>
+" 'Most Recent Files' number
+let g:startify_files_number           = 18
+" Update session automatically as you exit vim
+"let g:startify_session_persistence    = 1
+
 "Plugin 'lifepillar/vim-solarized8'
 
 Plugin 'godlygeek/tabular'
@@ -90,21 +108,24 @@ Plugin 'easymotion/vim-easymotion'
 "Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 
-Plugin 'kshenoy/vim-signature'
-Plugin 'scrooloose/nerdcommenter'
+"Plugin 'kshenoy/vim-signature'
+"Plugin 'scrooloose/nerdcommenter'
 Plugin 'raimondi/delimitmate'
-
-Plugin 'triglav/vim-visual-increment'
 
 Plugin 'ctrlpvim/ctrlp.vim'
 "https://vim.fandom.com/wiki/Remove_unwanted_spaces
 "autocmd BufWritePre * %s/\s\+$//e
 
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-commentary'
 
 
-"nnoremap <silent> <C-,> :NERDTreeToggle<CR>
-nnoremap <silent> <C-m> :NERDTreeFind<CR>
+"nnoremap <silent> <C-x> :NERDTreeToggle<CR>
+"nnoremap <silent> <C-m> :NERDTreeFind<CR>
+nnoremap <silent> <C-m> :Dirvish %<CR>
+"nnoremap <silent> <C-m> :Vifm<CR>
 
 "autocmd StdinReadPre * let s:std_in=1
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") && v:this_session == "" | NERDTree | endif
@@ -122,7 +143,6 @@ nmap ghn <Plug>(GitGutterNextHunk)
 nmap ghp <Plug>(GitGutterPrevHunk)
 nmap ghd <Plug>(GitGutterFold)
 nmap gha <Plug>(GitGutterStageHunk)
-map \ <Plug>(easymotion-prefix)
 
 let g:multi_cursor_start_word_key = '<C-n>'
 
@@ -181,7 +201,8 @@ set nrformats=alpha,octal,hex
 set backspace=indent,eol,start
 set statusline+=%F
 
-set foldmethod=syntax
+" set foldmethod=syntax
+set foldmethod=indent
 
 set linespace=2
 
@@ -195,7 +216,7 @@ set nowrap
 
 set encoding=utf-8
 
-set background=light
+set background=dark
 syntax on
 syntax enable
 
@@ -205,6 +226,7 @@ set ignorecase
 if has("gui_running")
   set cursorline
 endif
+
 set syntax=verilog
 set tabstop=2
 set shiftwidth=2
@@ -221,13 +243,18 @@ set ruler
 " relative line numbers
 set nu rnu
 
-set path+=**
 
+"set ttyfast
+set lazyredraw
+
+set path+=**
+set wildmenu
 
 set t_Co=256
 let g:solarized_termcolors=256
 set bg=light
-let g:gruvbox_italic=1
+let g:gruvbox_italic=0
+"let g:gruvbox_italic=1
 let g:gruvbox_termcolors=16
 "let g:gruvbox_contrast_dark=hard
 "let g:gruvbox_contrast_light=hard
@@ -255,6 +282,27 @@ nnoremap tj :tabprev<CR>
 nnoremap th :tabfirst<CR>
 nnoremap tl :tablast<CR>
 
+" `SPC l s` - save current session
+nnoremap <leader>ls :SSave<CR>
+" `SPC l l` - list sessions / switch to different project
+nnoremap <leader>ll :SClose<CR>
+
+" system clipboard
+noremap <leader>y "*y
+noremap <leader>p "*p
+noremap <leader>Y "+y
+noremap <leader>P "+p
+
+" Get full file path
+let @" = expand("%:p")
+
+
+au BufRead,BufNewFile *.config_yaml set filetype=yaml
+au BufRead,BufNewFile *.sdc set filetype=tcl
+autocmd FileType verilog_systemverilog setlocal commentstring=//\ %s
+autocmd FileType tcl setlocal commentstring=#\ %s
+autocmd FileType sdc setlocal commentstring=#\ %s
+set timeoutlen=1000 ttimeoutlen=0
 
 "colorscheme default
 colorscheme peachpuff
@@ -262,11 +310,12 @@ colorscheme peachpuff
 "colorscheme torte
 "colorscheme solarized
 "colorscheme solarized8
-"colorscheme gruvbox
+colorscheme gruvbox
 
 if has("gui_running")
   colorscheme gruvbox
-  set guifont=JetBrains\ Mono\ NL\ Regular\ 11
+  "set guifont=JetBrains\ Mono\ NL\ Regular\ 11
+else
 endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
@@ -281,7 +330,12 @@ if has('gui_running')
 endif
 
 if has('nvim')
-    "au! TabNewEntered * Startify
+  "au! TabNewEntered * Startify
+  set bg=light
+  colorscheme gruvbox
+  set cursorline
+else
+  set bg=dark
 endif
 
 "set statusline=
