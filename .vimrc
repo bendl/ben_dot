@@ -79,6 +79,7 @@ Plugin 'universal-ctags/ctags'
 
   " Plugin 'morhetz/gruvbox'
   Plugin 'gruvbox-community/gruvbox'
+  " Plugin 'relastle/bluewery.vim'
 
   "Plugin 'junegunn/goyo.vim'
 "endif
@@ -90,9 +91,13 @@ let g:startify_files_number           = 18
 " Update session automatically as you exit vim
 "let g:startify_session_persistence    = 1
 
-"Plugin 'lifepillar/vim-solarized8'
+Plugin 'lifepillar/vim-solarized8'
 
 Plugin 'godlygeek/tabular'
+
+" Plugin 'roman/golden-ratio'
+" Plugin 'SirVer/ultisnips'
+" Plugin 'Shougo/neosnippet.vim'
 
 "Plugin 'majutsushi/tagbar'
 "nmap <F8> :TagbarToggle<CR>
@@ -116,7 +121,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 "https://vim.fandom.com/wiki/Remove_unwanted_spaces
 "autocmd BufWritePre * %s/\s\+$//e
 
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'junegunn/fzf'
 
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-commentary'
@@ -143,6 +148,10 @@ nmap ghn <Plug>(GitGutterNextHunk)
 nmap ghp <Plug>(GitGutterPrevHunk)
 nmap ghd <Plug>(GitGutterFold)
 nmap gha <Plug>(GitGutterStageHunk)
+
+nmap <F8> :TagbarToggle<CR>
+
+nmap gvf :Vifm<CR>
 
 let g:multi_cursor_start_word_key = '<C-n>'
 
@@ -196,10 +205,13 @@ filetype plugin indent on    " required
 
 "Remove all trailing whitespace by pressing F5
 nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+nnoremap <F6> :bufdo e<CR>
+nnoremap <F7> :noh<CR>
+
+set title
 
 set nrformats=alpha,octal,hex
 set backspace=indent,eol,start
-set statusline+=%F
 
 " set foldmethod=syntax
 set foldmethod=indent
@@ -210,9 +222,10 @@ set mouse=a
 set number
 set listchars=eol:$,tab:.-,trail:~,extends:>,precedes:<
 set list
-"set cursorcolumn
-"set cursorline
+set colorcolumn=80
+set cursorline
 set nowrap
+set hlsearch
 
 set encoding=utf-8
 
@@ -223,14 +236,15 @@ syntax enable
 set incsearch
 set ignorecase
 
-if has("gui_running")
-  set cursorline
-endif
+" if has("gui_running")
+"   set cursorline
+" endif
 
 set syntax=verilog
 set tabstop=2
 set shiftwidth=2
 set expandtab
+set paste
 
 let g:indent_guides_enable_on_vim_startup = 1
 
@@ -276,11 +290,14 @@ nnoremap tn :tabnew<CR>
 nnoremap tm :tabnew<Space>
 nnoremap tq :tabclose<CR>
 
-nnoremap tk :tabnext<CR>
-nnoremap tj :tabprev<CR>
+nnoremap th :tabprev<CR>
+nnoremap tl :tabnext<CR>
 
-nnoremap th :tabfirst<CR>
-nnoremap tl :tablast<CR>
+nnoremap tj :tabfirst<CR>
+nnoremap tk :tablast<CR>
+
+nnoremap tgh :tabm -1<CR>
+nnoremap tgl :tabm +1<CR>
 
 " `SPC l s` - save current session
 nnoremap <leader>ls :SSave<CR>
@@ -293,30 +310,34 @@ noremap <leader>p "*p
 noremap <leader>Y "+y
 noremap <leader>P "+p
 
+" provide hjkl movements in Insert mode via the <Alt> modifier key
+inoremap <A-h> <C-o>h
+inoremap <A-j> <C-o>j
+inoremap <A-k> <C-o>k
+inoremap <A-l> <C-o>l
+
+
 " Get full file path
 let @" = expand("%:p")
 
 
 au BufRead,BufNewFile *.config_yaml set filetype=yaml
+au BufRead,BufNewFile *.config set filetype=tcl
 au BufRead,BufNewFile *.sdc set filetype=tcl
+au BufRead,BufNewFile *.template set filetype=tcl
 autocmd FileType verilog_systemverilog setlocal commentstring=//\ %s
 autocmd FileType tcl setlocal commentstring=#\ %s
 autocmd FileType sdc setlocal commentstring=#\ %s
 set timeoutlen=1000 ttimeoutlen=0
 
 "colorscheme default
-colorscheme peachpuff
+"colorscheme peachpuff
 "colorscheme gruvbox
 "colorscheme torte
 "colorscheme solarized
 "colorscheme solarized8
-colorscheme gruvbox
+" colorscheme gruvbox
 
-if has("gui_running")
-  colorscheme gruvbox
-  "set guifont=JetBrains\ Mono\ NL\ Regular\ 11
-else
-endif
 
 "https://codeyarns.com/2014/09/02/how-to-fold-code-in-vim/
 "set foldmethod=indent
@@ -325,17 +346,21 @@ endif
 "    autocmd BufRead * normal zR
 "augroup END
 
-if has('gui_running')
-    "set lines=999 columns=999
-endif
+if has("gui_running")
+  colorscheme gruvbox
+  "set guifont=JetBrains\ Mono\ NL\ Regular\ 11
+end
 
 if has('nvim')
   "au! TabNewEntered * Startify
   set bg=light
   colorscheme gruvbox
-  set cursorline
 else
-  set bg=dark
+  " colorscheme peachpuff
+  " set bg=dark
+  set bg=light
+  colorscheme gruvbox
+  set cursorline
 endif
 
 "set statusline=
@@ -361,9 +386,37 @@ endif
 "set statusline+=%#Cursor#       " colour
 "set statusline+=\ %3p%%\                " percentage
 "
-set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
+" set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
 
+" set statusline+=%F
 
+" let g:lightline = {
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'absolutepath', 'modified' ] ],
+"       \ }
+"       \ }
+
+let g:lightline = {
+      \ 'component': {
+      \   'filename': '%F',
+      \ }
+      \ }
+
+let g:ascii = [
+\ '      O               ',
+\ '       o              ',
+\ '        o __          ',
+\ '         /  \         ',
+\ '         |  |         ',
+\ '         @  @         ',
+\ '         |  |         ',
+\ '         || |/        ',
+\ '         || ||        ',
+\ '         |\_/|        ',
+\ '         \___/        ',
+\ ]
+let g:startify_custom_header =
+      \ 'startify#pad( startify#fortune#boxed() + g:ascii )'
 
 
 
